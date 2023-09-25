@@ -2,7 +2,7 @@
 
 from http import HTTPStatus
 from typing import Optional, Dict
-
+from random import choice
 import requests
 
 from .abstract_client import (
@@ -60,7 +60,22 @@ class RequestsWebClientErrorResponse(WebClientErrorResponse):
 class RequestsWebClient(AbstractWebClient):
     """requests-based web client to be used by the sitemap fetcher."""
 
-    __USER_AGENT = 'ultimate_sitemap_parser/{}'.format(__version__)
+    __USER_AGENT = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
+    "curl/7.68.0",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko",  # Internet Explorer
+    "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:89.0) Gecko/20100101 Firefox/89.0",  # Firefox
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Safari/605.1.15",  # Safari
+    "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Mobile Safari/537.36",  # Chrome on Android
+    "Mozilla/5.0 (Linux; U; Android 4.4.2; en-US; XT907 Build/SU2-SD-K-12.15) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30",  # Android Browser
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/94.0.992.38 Safari/537.36",  # Microsoft Edge
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Whale/2.11.114.32 Chrome/94.0.4606.71 Safari/537.36",  # Naver Whale
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",  # Linux
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",  # Mac
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",  # Windows
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",  # Windows
+    ]
 
     __HTTP_REQUEST_TIMEOUT = 60
     """
@@ -108,7 +123,7 @@ class RequestsWebClient(AbstractWebClient):
                 url,
                 timeout=self.__timeout,
                 stream=True,
-                headers={'User-Agent': self.__USER_AGENT},
+                headers={'User-Agent': choice(self.__USER_AGENT)},
                 proxies=self.__proxies
             )
         except requests.exceptions.Timeout as ex:
